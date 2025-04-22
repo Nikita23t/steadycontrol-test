@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
-import { TopicsModule } from './topics/topics.module';
-import { CategoriesModule } from './categories/categories.module';
 import { ConfigModule } from "@nestjs/config";
+import { MongooseModule } from "@nestjs/mongoose";
+import { ParserModule } from "./topics/topics.module";
 
 
 @Module({
@@ -13,8 +13,8 @@ import { ConfigModule } from "@nestjs/config";
             isGlobal: true,
             envFilePath: '.env',
         }),
-        TopicsModule, 
-        CategoriesModule
+        MongooseModule.forRoot(`${process.env.MONGODB_URI}`),
+        ParserModule,
     ]
 })
 export class AppModule { }

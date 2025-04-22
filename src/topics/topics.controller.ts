@@ -1,22 +1,26 @@
-import { Controller, Get, Param } from '@nestjs/common';
-import { TopicsService } from './topics.service';
-import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { Controller, Get, Query } from '@nestjs/common';
+import { ParserService } from './topics.service';
 
 
-@ApiTags("topics")
-@Controller('/topics')
-export class TopicsController {
-  constructor(private readonly topicsService: TopicsService) {}
+@Controller('parser')
+export class ParserController {
+  constructor(private readonly parserService: ParserService) {}
 
-  @Get('/topics/:topics')
-  // @ApiParam({ })
-  getTopics() {
-    return 
+  @Get('login')
+  async login(
+    @Query('username') username: string,
+    @Query('password') password: string,
+  ) {
+    await this.parserService.login(username, password);
+    return { message: 'Logged in successfully' };
   }
 
-  @Get('/topics')
-  // @ApiParam({ })
-  getTransaction() {
-    return 
+  @Get('parse')
+  async parse(
+    @Query('subcategoryUrl') url: string,
+    @Query('subcategoryName') subcategoryName: string,
+  ) {
+    await this.parserService.parseTopicsFromSubcategory(url, subcategoryName);
+    return { message: 'Parsing and saving done' };
   }
 }

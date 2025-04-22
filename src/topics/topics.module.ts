@@ -1,11 +1,18 @@
 import { Module } from '@nestjs/common';
-import { HttpModule } from '@nestjs/axios';
-import { TopicsController } from './topics.controller';
-import { TopicsService } from './topics.service';
+import { MongooseModule } from '@nestjs/mongoose';
+import { CategorySchema } from 'src/schemas/categories.schema';
+import { TopicSchema } from 'src/schemas/topics.schema';
+import { ParserController } from './topics.controller';
+import { ParserService } from './topics.service';
 
 @Module({
-  imports: [HttpModule],
-  controllers: [TopicsController],
-  providers: [TopicsService],
+  imports: [
+    MongooseModule.forFeature([
+      { name: 'Categories', schema: CategorySchema },
+      { name: 'Topics', schema: TopicSchema },
+    ]),
+  ],
+  controllers: [ParserController],
+  providers: [ParserService],
 })
-export class TopicsModule {}
+export class ParserModule {}
