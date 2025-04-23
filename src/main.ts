@@ -16,7 +16,7 @@ async function start() {
   const document = SwaggerModule.createDocument(app, docs);
   SwaggerModule.setup('/api/docs', app, document)
 
-  // app.setGlobalPrefix("/api")
+  app.setGlobalPrefix("/api")
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   await app.listen(process.env.PORT || 6999,

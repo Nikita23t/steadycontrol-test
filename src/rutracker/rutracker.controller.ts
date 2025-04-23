@@ -1,6 +1,7 @@
 import { Controller, Get, Body, Post, Logger } from '@nestjs/common';
 import { RutrackerService } from './rutracker.service';
-import { ApiBody, ApiOperation, ApiProperty } from '@nestjs/swagger';
+import { ApiOperation, ApiProperty } from '@nestjs/swagger';
+import { TopicsDto } from './dto/topics.dto';
 
 @Controller('/parser')
 export class RutrackerController {
@@ -8,35 +9,24 @@ export class RutrackerController {
 
   constructor(private readonly rutrackerService: RutrackerService) { }
 
-  // @Post('login')
-  // async login() {
-  //   try {
-  //     await this.rutrackerService.login();
-  //     return 'Успешный логин!';
-  //   } catch (err) {
-  //     this.logger.error(`Ошибка при логине: ${err.message}`);
-  //     return 'Ошибка при логине';
-  //   }
-  // }
-
-  // @Post('/category')
-  // async saveCategory(@Body() body: { name: string; url: string; subcategories: { name: string; url: string }[]; }) {
-  //   try {
-  //     await this.rutrackerService.login();
-  //     const result = await this.rutrackerService.saveCategory(body.name, body.url, body.subcategories);
-  //     return result;
-  //   } catch (err) {
-  //     this.logger.error(`Ошибка ${err.message}`);
-  //     return 'Ошибка';
-  //   }
-  // }
+  @ApiOperation({ summary: 'логин для получения куков' })
+  @ApiProperty({ example: { username: "username",password: "password"}, description: 'логин' })
+  @Post('/login')
+  async login(  @Body() body: { username: string; password: string } ) {
+    try {
+      const result = await this.rutrackerService.login(body.username, body.password);
+      return result;
+    } catch (err) {
+      this.logger.error(`Ошибка л ${err.message}`);
+      return 'Ошибка л';
+    }
+  }
 
   @ApiOperation({ summary: 'Распарсить все категории и подкатегории' })
-  @Get('/parse-all-categories')
-  async parseAll() {
+  @Get('/categories')
+  async categories() {
     try {
-      await this.rutrackerService.login();
-      const result = await this.rutrackerService.parseAllCategories();
+      const result = await this.rutrackerService.categories();
       return result;
     } catch (err) {
       this.logger.error(`Ошибка к ${err.message}`);
@@ -46,11 +36,10 @@ export class RutrackerController {
 
   @ApiOperation({ summary: 'Распарсить топики из подкатегории' })
   @ApiProperty({ example: 'https://rutracker.org/forum/viewforum.php?f=123', description: 'URL подкатегории' })
-  @Post('/parse-topics')
-  async parseTopics(@Body() body: { url: string }) {
+  @Post('/topics')
+  async topics(@Body() body: TopicsDto) {
     try {
-      await this.rutrackerService.login();
-      const result = await this.rutrackerService.parseTopicsFromSubcategory(body.url);
+      const result = await this.rutrackerService.topics(body);
       return result;
     } catch (err) {
       this.logger.error(`Ошибка т ${err.message}`);

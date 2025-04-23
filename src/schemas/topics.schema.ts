@@ -7,42 +7,57 @@ export interface Topic {
   url: string;
 }
 
+export interface Subcategory {
+  name: string;
+  url: string;
+}
+
+export interface ParsedCategory {
+  name: string;
+  url: string;
+  subcategories: Subcategory[];
+}
+
 @Schema()
 export class TopicSchema extends Document {
 
   @ApiProperty({ example: 'Интересный торрент', description: 'Название темы' })
-  @Prop() 
+  @Prop()
   title: string;
 
-  @ApiProperty({ 
-    example: 'https://rutracker.org/forum/viewtopic.php?t=123456', 
-    description: 'Ссылка на тему' 
+  @ApiProperty({
+    example: 'https://rutracker.org/forum/viewtopic.php?t=123456',
+    description: 'Ссылка на тему'
   })
-  @Prop() 
+  @Prop()
   url: string;
 
   @ApiProperty({ example: 'someuser', description: 'Автор топика' })
-  @Prop() 
+  @Prop()
   author: string;
 
   @ApiProperty({ example: '2025-04-23 14:00', description: 'Дата публикации' })
-  @Prop() 
+  @Prop()
   postedAt: string;
 
   @ApiProperty({ example: 'magnet:?xt=urn:btih:...', description: 'Magnet-ссылка' })
-  @Prop() 
+  @Prop()
   magnetLink: string;
 
-  @ApiProperty({ 
-    example: 'https://rutracker.org/dl.php?t=123456', 
-    description: 'Ссылка на .torrent файл' 
+  @ApiProperty({ example: 'Описание топика', description: 'Описание' })
+  @Prop()
+  description: string;
+
+  @ApiProperty({
+    example: 'https://rutracker.org/dl.php?t=123456',
+    description: 'Ссылка на .torrent файл'
   })
-  @Prop() 
+  @Prop()
   torrentFileLink: string;
 
-  @ApiProperty({ 
-    example: { 'Качество': 'HD', 'Язык': 'Русский' }, 
-    description: 'Дополнительные детали (ключ-значение)' 
+  @ApiProperty({
+    example: { 'Качество': 'HD', 'Язык': 'Русский' },
+    description: 'Дополнительные детали (ключ-значение)'
   })
   @Prop({ type: Map, of: String })
   details: Record<string, string>;
