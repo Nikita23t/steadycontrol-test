@@ -7,7 +7,7 @@ async function start() {
   const app = await NestFactory.create(AppModule);
 
   const docs = new DocumentBuilder()
-    .setTitle('Тестовое задание STAKEME')
+    .setTitle('Тестовое задание steadycontrol')
     .setDescription('API для тестового задания')
     .setVersion("1.0.0")
     .addTag('nikita23t/pierrdoon')
@@ -16,6 +16,7 @@ async function start() {
   const document = SwaggerModule.createDocument(app, docs);
   SwaggerModule.setup('/api/docs', app, document)
 
+  // app.setGlobalPrefix("/api")
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   await app.listen(process.env.PORT || 6999,

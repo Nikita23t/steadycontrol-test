@@ -1,7 +1,8 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
-import { ParserModule } from "./topics/topics.module";
+import { ParserModule } from "./rutracker/rutracker.module";
+
 
 
 @Module({
