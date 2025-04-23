@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
-import { ParserModule } from "./rutracker/rutracker.module";
+import { RutrackerModule } from "./rutracker/rutracker.module";
 
 
 
@@ -15,7 +15,7 @@ import { ParserModule } from "./rutracker/rutracker.module";
             envFilePath: '.env',
         }),
         MongooseModule.forRoot(`${process.env.MONGODB_URI}`),
-        ParserModule,
+        RutrackerModule,
     ]
 })
 export class AppModule { }

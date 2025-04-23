@@ -1,18 +1,18 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CategorySchema } from 'src/schemas/categories.schema';
-import { TopicSchema } from 'src/schemas/topics.schema';
-import { ParserService } from './rutracker.service';
-import { ParserController } from './rutracker.controller';
+import { TopicsSchema } from 'src/schemas/topics.schema';
+import { RutrackerService } from './rutracker.service';
+import { RutrackerController } from './rutracker.controller';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: 'Categories', schema: CategorySchema },
-      { name: 'Topics', schema: TopicSchema },
+      { name: 'Topics', schema: TopicsSchema },
     ]),
   ],
-  controllers: [ParserController],
-  providers: [ParserService],
+  controllers: [RutrackerController],
+  providers: [RutrackerService],
 })
-export class ParserModule {}
+export class RutrackerModule {}
